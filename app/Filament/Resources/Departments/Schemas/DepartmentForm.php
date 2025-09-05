@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Departments\Schemas;
 
+use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
@@ -13,10 +14,14 @@ class DepartmentForm
         return $schema
             ->components([
                 TextInput::make('name')
-                    ->label('Department Name')
+                    ->live(onBlur: true)
+                    ->required()
+                    ->afterStateUpdated(function (string $operation, $state, callable $set) {
+                        $set('slug', \Str::slug($state));
+                    }),
+                TextInput::make('slug')
                     ->required(),
-
-                Textarea::make('description'),
+                Checkbox::make('active')
             ]);
     }
 }
