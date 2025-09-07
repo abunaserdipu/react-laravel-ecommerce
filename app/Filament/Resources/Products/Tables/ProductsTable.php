@@ -2,9 +2,11 @@
 
 namespace App\Filament\Resources\Products\Tables;
 
+use App\Enums\ProductStatusEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
 class ProductsTable
@@ -13,7 +15,17 @@ class ProductsTable
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('title')
+                    ->sortable()
+                    ->words(10)
+                    ->searchable(),
+                TextColumn::make('status')
+                    ->badge()
+                    ->colors(ProductStatusEnum::colors()),
+                TextColumn::make('department.name'),
+                TextColumn::make('category.name'),
+                TextColumn::make('created_at')
+                    ->dateTime(),
             ])
             ->filters([
                 //
