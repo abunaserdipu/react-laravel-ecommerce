@@ -7,6 +7,7 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class ProductsTable
@@ -28,7 +29,10 @@ class ProductsTable
                     ->dateTime(),
             ])
             ->filters([
-                //
+                SelectFilter::make('status')
+                    ->options(ProductStatusEnum::labels()),
+                SelectFilter::make('department')
+                    ->relationship('department', 'name'),
             ])
             ->recordActions([
                 EditAction::make(),
