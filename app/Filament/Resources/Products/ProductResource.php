@@ -7,6 +7,7 @@ use App\Filament\Resources\Products\Pages\CreateProduct;
 use App\Filament\Resources\Products\Pages\EditProduct;
 use App\Filament\Resources\Products\Pages\ListProducts;
 use App\Filament\Resources\Products\Pages\ProductImages;
+use App\Filament\Resources\Products\Pages\ProductVariationTypes;
 use App\Filament\Resources\Products\Schemas\ProductForm;
 use App\Filament\Resources\Products\Tables\ProductsTable;
 use Filament\Pages\Enums\SubNavigationPosition;
@@ -54,6 +55,7 @@ class ProductResource extends Resource
             'create' => CreateProduct::route('/create'),
             'edit' => EditProduct::route('/{record}/edit'),
             'images' => ProductImages::route('/{record}/images'),
+            'variation-types' => ProductVariationTypes::route('/{record}/variation-types'),
         ];
     }
 
@@ -62,6 +64,7 @@ class ProductResource extends Resource
         return $page->generateNavigationItems([
             EditProduct::class,
             ProductImages::class,
+            ProductVariationTypes::class,
         ]);
     }
 

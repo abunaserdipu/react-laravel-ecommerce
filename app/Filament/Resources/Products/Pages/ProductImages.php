@@ -16,6 +16,11 @@ class ProductImages extends EditRecord
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::Photo;
 
+        public static function getNavigationLabel(): string
+    {
+        return 'Product Images';
+    }
+
     public function form(Schema $schema): Schema
     {
         return $schema
