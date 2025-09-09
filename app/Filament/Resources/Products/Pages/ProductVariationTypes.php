@@ -18,7 +18,7 @@ class ProductVariationTypes extends EditRecord
 {
     protected static string $resource = ProductResource::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::Photo;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedNumberedList;
 
     public static function getNavigationLabel(): string
     {
