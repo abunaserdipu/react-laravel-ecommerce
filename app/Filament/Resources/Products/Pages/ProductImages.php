@@ -7,10 +7,14 @@ use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 use Filament\Schemas\Schema;
+use BackedEnum;
+use Filament\Support\Icons\Heroicon;
 
 class ProductImages extends EditRecord
 {
     protected static string $resource = ProductResource::class;
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::Photo;
 
     public function form(Schema $schema): Schema
     {
