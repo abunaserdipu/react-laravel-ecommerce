@@ -18,11 +18,12 @@ class ProductVariationTypes extends EditRecord
 {
     protected static string $resource = ProductResource::class;
 
+    protected static ?string $title = 'Variation Types';
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedNumberedList;
 
     public static function getNavigationLabel(): string
     {
-        return 'Product Variation Types';
+        return 'Variation Types';
     }
 
     public function form(Schema $schema): Schema
@@ -30,6 +31,7 @@ class ProductVariationTypes extends EditRecord
         return $schema
             ->schema([
                 Repeater::make('variationTypes')
+                    ->hiddenLabel()
                     ->relationship()
                     ->collapsible()
                     ->defaultItems(1)

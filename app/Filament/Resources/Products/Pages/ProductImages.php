@@ -14,11 +14,13 @@ class ProductImages extends EditRecord
 {
     protected static string $resource = ProductResource::class;
 
+    protected static ?string $title = 'Images';
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::Photo;
 
-        public static function getNavigationLabel(): string
+    public static function getNavigationLabel(): string
     {
-        return 'Product Images';
+        return 'Images';
     }
 
     public function form(Schema $schema): Schema
@@ -26,6 +28,7 @@ class ProductImages extends EditRecord
         return $schema
             ->schema([
                 SpatieMediaLibraryFileUpload::make('images')
+                    ->hiddenLabel()
                     ->image()
                     ->multiple()
                     ->openable()
