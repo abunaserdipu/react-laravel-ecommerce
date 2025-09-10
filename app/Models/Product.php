@@ -16,6 +16,8 @@ class Product extends Model implements HasMedia
 
     protected $dispatchAfterCommit = true; // ✅ ensures all dispatched jobs wait until after the transaction is committed
 
+
+
     public function registerMediaConversions(Media $media = null): void
     {
         $this->addMediaConversion('thumb')
@@ -43,5 +45,10 @@ class Product extends Model implements HasMedia
     public function variationTypes()
     {
         return $this->hasMany(VariationType::class);
+    }
+
+    public function variations()
+    {
+        return $this->hasMany(ProductVariation::class, 'product_id');
     }
 }

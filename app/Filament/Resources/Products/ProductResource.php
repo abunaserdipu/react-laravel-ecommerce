@@ -7,6 +7,7 @@ use App\Filament\Resources\Products\Pages\CreateProduct;
 use App\Filament\Resources\Products\Pages\EditProduct;
 use App\Filament\Resources\Products\Pages\ListProducts;
 use App\Filament\Resources\Products\Pages\ProductImages;
+use App\Filament\Resources\Products\Pages\ProductVariations;
 use App\Filament\Resources\Products\Pages\ProductVariationTypes;
 use App\Filament\Resources\Products\Schemas\ProductForm;
 use App\Filament\Resources\Products\Tables\ProductsTable;
@@ -56,6 +57,7 @@ class ProductResource extends Resource
             'edit' => EditProduct::route('/{record}/edit'),
             'images' => ProductImages::route('/{record}/images'),
             'variation-types' => ProductVariationTypes::route('/{record}/variation-types'),
+            'variations' => ProductVariations::route('/{record}/variations'),
         ];
     }
 
@@ -65,6 +67,7 @@ class ProductResource extends Resource
             EditProduct::class,
             ProductImages::class,
             ProductVariationTypes::class,
+            ProductVariations::class,
         ]);
     }
 
