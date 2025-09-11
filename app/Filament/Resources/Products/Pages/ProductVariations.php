@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Products\Pages;
 use App\Enums\ProductVariationTypeEnum;
 use App\Filament\Resources\Products\ProductResource;
 use Filament\Actions\DeleteAction;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
@@ -34,8 +35,7 @@ class ProductVariations extends EditRecord
         // dd($types);
         $fields = [];
         foreach ($types as $type) {
-            $fields[] = TextInput::make('variation_type_' . ($type->id) . '.id')
-                ->label($type->id);
+            $fields[] = Hidden::make('variation_type_' . ($type->id) . '.id');
             $fields[] = TextInput::make('variation_type_' . ($type->id) . '.name')
                 ->label($type->name);
         }
@@ -102,6 +102,7 @@ class ProductVariations extends EditRecord
             // If match is found, override quantity and price
             if (!empty($match)) {
                 $existingEntry = reset($match);
+                $product['id'] = $existingEntry['id'];
                 $product['quantity'] = $existingEntry['quantity'];
                 $product['price'] = $existingEntry['price'];
             } else {
@@ -164,18 +165,19 @@ class ProductVariations extends EditRecord
                 // dd($option['variation_type_' . $variationType->id . '.id']);
                 $variationTypeOptionIds[] = $option['variation_type_' . ($variationType->id)]['id'];
             }
-
+            // dd($option);
             $quantity = $option['quantity'];
             $price = $option['price'];
 
             // Prepare the data structure for the 
             $formattedData[] = [
+                'id' => $option['id'],
                 'variation_type_option_ids' => $variationTypeOptionIds,
                 'quantity' => $quantity,
                 'price' => $price
             ];
         }
-        
+
         $data['variations'] = $formattedData;
         return $data;
     }
@@ -184,10 +186,18 @@ class ProductVariations extends EditRecord
     {
         $variations = $data['variations'];
         unset($data['variations']);
+        // dd($data);
+        $variations = collect($variations)->map(function ($variation) {
+            return [
+                'id' => $variation['id'],
+                'variation_type_option_ids' => json_encode($variation['variation_type_option_ids']),
+                'quantity' => $variation['quantity'],
+                'price' => $variation['price']
+            ];
+        })
+            ->toArray();
 
-        $record->update($data);
-        $record->variations()->delete();
-        $record->variations()->createMany($variations);
+        $record->variations()->upsert($variations, ['id'], ['variation_type_option_ids', 'quantity', 'price']);
         return $record;
     }
 }
