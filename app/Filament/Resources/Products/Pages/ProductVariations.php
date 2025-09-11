@@ -14,6 +14,7 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use BackedEnum;
 use Filament\Support\Icons\Heroicon;
+use Illuminate\Database\Eloquent\Model;
 
 class ProductVariations extends EditRecord
 {
@@ -34,7 +35,7 @@ class ProductVariations extends EditRecord
         $fields = [];
         foreach ($types as $type) {
             $fields[] = TextInput::make('variation_type_' . ($type->id) . '.id')
-                ->hidden();
+                ->label($type->id);
             $fields[] = TextInput::make('variation_type_' . ($type->id) . '.name')
                 ->label($type->name);
         }
@@ -122,6 +123,7 @@ class ProductVariations extends EditRecord
             $temp = [];
 
             foreach ($variationType->options as $option) {
+                // dd($option);
                 // Add the current option to all existing combination
                 foreach ($result as $combination) {
                     $newCombination = $combination + [
@@ -154,11 +156,12 @@ class ProductVariations extends EditRecord
     {
         // Initialize an array to hold the formatted data
         $formattedData = [];
-
+        // dd($data);
         // Loop through each variation to restructure it
         foreach ($data['variations'] as $option) {
             $variationTypeOptionIds = [];
             foreach ($this->record->variationTypes as $i => $variationType) {
+                // dd($option['variation_type_' . $variationType->id . '.id']);
                 $variationTypeOptionIds[] = $option['variation_type_' . ($variationType->id)]['id'];
             }
 
@@ -172,9 +175,20 @@ class ProductVariations extends EditRecord
                 'price' => $price
             ];
         }
-
+        
         $data['variations'] = $formattedData;
         return $data;
+    }
+
+    protected function handleRecordUpdate(Model $record, array $data): Model
+    {
+        $variations = $data['variations'];
+        unset($data['variations']);
+
+        $record->update($data);
+        $record->variations()->delete();
+        $record->variations()->createMany($variations);
+        return $record;
     }
 }
 
