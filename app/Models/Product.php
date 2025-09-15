@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\ProductStatusEnum;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\MediaLibrary\HasMedia;
@@ -15,8 +17,6 @@ class Product extends Model implements HasMedia
     public $queueable = true;
 
     protected $dispatchAfterCommit = true; // ✅ ensures all dispatched jobs wait until after the transaction is committed
-
-
 
     public function registerMediaConversions(Media $media = null): void
     {
@@ -32,6 +32,17 @@ class Product extends Model implements HasMedia
             ->width(1200)
             ->queued();
     }
+
+    public function scopeForVendor(Builder $query)
+    {
+        return $query->where('created_by',auth()->user()->id);
+    }
+
+    public function scopePublished(Builder $query)
+    {
+        return $query->where('status',ProductStatusEnum::Published);
+    }
+
     public function department(): BelongsTo
     {
         return $this->belongsTo(Department::class);
