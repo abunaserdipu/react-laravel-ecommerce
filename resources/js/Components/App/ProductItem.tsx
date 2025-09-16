@@ -3,6 +3,7 @@ import { Link } from "@inertiajs/react";
 import React from "react";
 
 export default function ProductItem({ product }: { product: Product }) {
+    console.log(product);
     return (
         <div className="card bg-base-100 shadow-xl">
             <Link href={route("product.show", product.slug)}>
