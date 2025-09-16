@@ -35,12 +35,17 @@ class Product extends Model implements HasMedia
 
     public function scopeForVendor(Builder $query)
     {
-        return $query->where('created_by',auth()->user()->id);
+        return $query->where('created_by', auth()->user()->id);
     }
 
     public function scopePublished(Builder $query)
     {
-        return $query->where('status',ProductStatusEnum::Published);
+        return $query->where('status', ProductStatusEnum::Published);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'created_by');
     }
 
     public function department(): BelongsTo
