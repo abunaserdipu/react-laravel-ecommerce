@@ -16,10 +16,10 @@ class ProductListResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->id,
-            'slug' => $this->id,
-            'price' => $this->id,
-            'quantity' => $this->id,
+            'title' => $this->title,
+            'slug' => $this->slug,
+            'price' => $this->price,
+            'quantity' => $this->quantity,
             'image' => $this->getFirstMediaUrl('images','small'),
             'user' => [
                 'id' => $this->user->id,
