@@ -119,11 +119,28 @@ export default function Show({
                     <div className="flex gap-2 mb-4">
                         {type.options.map(option => (
                             <div onClick={() => chooseOption(type.id,option)} key={option.id}>
-                                {option.images && <img src={option.images[0].thumb} alt="" className={'w-[50px]' +}/>}
+                                {option.images && <img src={option.images[0].thumb} alt="" className={'w-[50px]' + (
+                                    selectedOptions[type.id]?.id === option.id ?
+                                    'outline outline-4 outline-primary' : ''
+                                )}/>}
                             </div>
                         ))}
+                    </div>}
+                    {type.type === 'radio' && 
+                    <div className="flex join mb-4">
+                        {type.options.map(option => (
+                            <input onChange={() => chooseOption(type.id,option)} key={option.id} 
+                            className="join-item btn" 
+                            type="radio" 
+                            value={option.id} 
+                            checked={selectedOptions[type.id]?.id === option.id}
+                            name={"variation_type_" + type.id}
+                            aria-label={option.name}
+                            />
+                        ))}
                     </div>
-                    }
+                        }
+
                 </div>
             ))
         )
