@@ -66,7 +66,7 @@ export default function Show({
         for (let type of product.variationTypes) {
             // console.log(type);
             const selectedOptionId: number = variationOptions[type.id];
-            console.log(selectedOptionId, type.option);
+            console.log(selectedOptionId, type.options);
             chooseOption(
                 type.id,
                 type.options.find((op) => op.id == selectedOptionId) ||
@@ -135,15 +135,15 @@ export default function Show({
                                 onClick={() => chooseOption(type.id, option)}
                                 key={option.id}
                             >
-                                {option.image && (
+                                {option.images && (
                                     <img
-                                        src={option.image[0].thumb}
+                                        src={option.images[0].thumb}
                                         alt=""
                                         className={
                                             "w-[50px]" +
                                             (selectedOptions[type.id]?.id ===
                                             option.id
-                                                ? "outline outline-4 outline-primary"
+                                                ? " outline outline-4 outline-primary"
                                                 : "")
                                         }
                                     />

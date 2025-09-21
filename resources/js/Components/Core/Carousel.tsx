@@ -1,9 +1,10 @@
 import { Image } from "@/types";
 
 export default function Carousel({ images }: { images: Image[] }) {
+    // console.log(images);
     return (
         <>
-            <div className="flex-items-start gap-8">
+            <div className="flex items-start gap-8">
                 <div className="flex flex-col items-center gap-2 py-2">
                     {images.map((image, i) => (
                         <a
