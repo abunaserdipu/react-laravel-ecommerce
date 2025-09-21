@@ -1,5 +1,6 @@
 import Carousel from "@/Components/Core/Carousel";
 import CurrencyFormatter from "@/Components/Core/CurrencyFormatter";
+import { arraysAreEqual } from "@/helpers";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Product, VariationTypeOption } from "@/types";
 import { Head, router, useForm, usePage } from "@inertiajs/react";
@@ -31,7 +32,8 @@ export default function Show({
     const images = useMemo(() => {
         for (let typeId in selectedOptions) {
             const option = selectedOptions[typeId];
-            if (option.image.length > 0) return option.image;
+            // console.log(option);
+            if (option.images.length > 0) return option.images;
         }
         return product.images;
     }, [product, selectedOptions]);
@@ -42,7 +44,8 @@ export default function Show({
             .sort();
 
         for (let variation of product.variations) {
-            const optionIds = variation.variation_type_option_id.sort();
+            // console.log(variation);
+            const optionIds = variation.variation_type_option_ids.sort();
             if (arraysAreEqual(selectedOptionIds, optionIds)) {
                 return {
                     price: variation.price,
@@ -61,12 +64,13 @@ export default function Show({
 
     useEffect(() => {
         for (let type of product.variationTypes) {
+            // console.log(type);
             const selectedOptionId: number = variationOptions[type.id];
             console.log(selectedOptionId, type.option);
             chooseOption(
                 type.id,
-                type.option.find((op) => op.id == selectedOptionId) ||
-                    type.option[0],
+                type.options.find((op) => op.id == selectedOptionId) ||
+                    type.options[0],
                 false
             );
         }
@@ -120,12 +124,13 @@ export default function Show({
     };
 
     const renderProductVariationTypes = () => {
+        // console.log(product.variationTypes);
         return product.variationTypes.map((type, i) => (
             <div key={type.id}>
                 <b>{type.name}</b>
                 {type.type === "image" && (
                     <div className="flex gap-2 mb-4">
-                        {type.option.map((option) => (
+                        {type.options.map((option) => (
                             <div
                                 onClick={() => chooseOption(type.id, option)}
                                 key={option.id}
@@ -149,7 +154,7 @@ export default function Show({
                 )}
                 {type.type === "radio" && (
                     <div className="flex join mb-4">
-                        {type.option.map((option) => (
+                        {type.options.map((option) => (
                             <input
                                 onChange={() => chooseOption(type.id, option)}
                                 key={option.id}
@@ -225,7 +230,7 @@ export default function Show({
 
                         {renderProductVariationTypes()}
 
-                        {computedProduct.quantity != undefied &&
+                        {computedProduct.quantity != undefined &&
                             computedProduct.quantity < 10 && (
                                 <div className="text-error my-4">
                                     <span>

@@ -21,8 +21,12 @@ export default function Carousel({ images }: { images: Image[] }) {
                 </div>
                 <div className="carousel w-full">
                     {images.map((image, i) => (
-                        <div id={"item" + i} className="carousel-item w-full" key={image.id}>
-                            <img src={image.large} className="w-full" />
+                        <div
+                            id={"item" + i}
+                            className="carousel-item w-full"
+                            key={image.id}
+                        >
+                            <img src={image.large} alt="" className="w-full" />
                         </div>
                     ))}
                 </div>

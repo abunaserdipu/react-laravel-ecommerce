@@ -4,7 +4,7 @@ import React from "react";
 import CurrencyFormatter from "../Core/CurrencyFormatter";
 
 export default function ProductItem({ product }: { product: Product }) {
-    console.log(product);
+    // console.log(product);
     return (
         <div className="card bg-base-100 shadow-xl">
             <Link href={route("product.show", product.slug)}>
