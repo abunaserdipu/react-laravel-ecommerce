@@ -23,7 +23,7 @@ export default function Show({
         price: null, // Populate price on change
     });
 
-    const url = usePage();
+    const {url} = usePage();
 
     const [selectedOptions, setSelectedOptions] = useState<
         Record<number, VariationTypeOption>
@@ -221,7 +221,7 @@ export default function Show({
                         <h1 className="text-2xl mb-8">{product.title}</h1>
 
                         <div>
-                            <div className="text-3xl-text-semibold">
+                            <div className="text-3xl text-semibold">
                                 <CurrencyFormatter
                                     amount={computedProduct.price}
                                 />
