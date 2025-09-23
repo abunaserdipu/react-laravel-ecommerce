@@ -242,7 +242,7 @@ export default function Show({
 
                         <b className="text-xl">About the Item</b>
                         <div
-                            className="wysiwyg-item"
+                            className="wysiwyg-output"
                             dangerouslySetInnerHTML={{
                                 __html: product.description,
                             }}
