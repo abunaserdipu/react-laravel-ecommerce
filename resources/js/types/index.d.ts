@@ -49,7 +49,7 @@ export type Product = {
     variationTypes: VariationType[],
     variations: Array<{
         id: number;
-        variation_type_option_id: number[];
+        variation_type_option_ids: number[];
         quantity: number;
         price: number
     }>

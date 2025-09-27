@@ -23,7 +23,7 @@ export default function Show({
         price: null, // Populate price on change
     });
 
-    const {url} = usePage();
+    const { url } = usePage();
 
     const [selectedOptions, setSelectedOptions] = useState<
         Record<number, VariationTypeOption>
@@ -38,13 +38,16 @@ export default function Show({
         return product.images;
     }, [product, selectedOptions]);
 
+    console.log("All variations:", product.variations);
+
     const computedProduct = useMemo(() => {
+        console.log("Inside useMemo:", product.variations);
         const selectedOptionIds = Object.values(selectedOptions)
             .map((op) => op.id)
             .sort();
 
         for (let variation of product.variations) {
-            // console.log(variation);
+            console.log("Inside loop:", variation.variation_type_option_ids);
             const optionIds = variation.variation_type_option_ids.sort();
             if (arraysAreEqual(selectedOptionIds, optionIds)) {
                 return {
@@ -55,11 +58,12 @@ export default function Show({
                             : variation.quantity,
                 };
             }
-            return {
-                price: product.price,
-                quantity: product.quantity,
-            };
         }
+
+        return {
+            price: product.price,
+            quantity: product.quantity,
+        };
     }, [product, selectedOptions]);
 
     useEffect(() => {
@@ -175,9 +179,11 @@ export default function Show({
     };
 
     const renderAddToCartButton = () => {
+        console.log(computedProduct);
         return (
             <div className="mb-8 flex gap-4">
                 <select
+                    name="quantity"
                     value={form.data.quantity}
                     onChange={onQuantityChange}
                     className="select select-bordered w-full"
