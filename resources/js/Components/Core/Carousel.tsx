@@ -24,10 +24,10 @@ export default function Carousel({ images }: { images: Image[] }) {
                     {images.map((image, i) => (
                         <div
                             id={"item" + i}
-                            className="carousel-item w-full"
+                            className="carousel-item w-full flex-shrink-0 flex-grow-0"
                             key={image.id}
                         >
-                            <img src={image.large} alt="" className="w-full" />
+                            <img src={image.large} alt="" className="w-full h-96 object-contain" />
                         </div>
                     ))}
                 </div>

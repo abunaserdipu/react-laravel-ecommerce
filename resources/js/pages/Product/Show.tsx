@@ -38,16 +38,16 @@ export default function Show({
         return product.images;
     }, [product, selectedOptions]);
 
-    console.log("All variations:", product.variations);
+    // console.log("All variations:", product.variations);
 
     const computedProduct = useMemo(() => {
-        console.log("Inside useMemo:", product.variations);
+        // console.log("Inside useMemo:", product.variations);
         const selectedOptionIds = Object.values(selectedOptions)
             .map((op) => op.id)
             .sort();
 
         for (let variation of product.variations) {
-            console.log("Inside loop:", variation.variation_type_option_ids);
+            // console.log("Inside loop:", variation.variation_type_option_ids);
             const optionIds = variation.variation_type_option_ids.sort();
             if (arraysAreEqual(selectedOptionIds, optionIds)) {
                 return {
@@ -179,7 +179,7 @@ export default function Show({
     };
 
     const renderAddToCartButton = () => {
-        console.log(computedProduct);
+        // console.log(computedProduct);
         return (
             <div className="mb-8 flex gap-4">
                 <select
