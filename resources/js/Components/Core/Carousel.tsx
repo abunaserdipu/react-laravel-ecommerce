@@ -1,14 +1,16 @@
 import { Image } from "@/types";
+import { useState } from "react";
 
 export default function Carousel({ images }: { images: Image[] }) {
+    const [selectedImage, setSelectedImage] = useState<Image>(images[0]);
     // console.log(images);
     return (
         <>
             <div className="flex items-start gap-8">
                 <div className="flex flex-col items-center gap-2 py-2">
                     {images.map((image, i) => (
-                        <a
-                            href={"#item" + i}
+                        <button
+                            onClick={(ev) => setSelectedImage(image)}
                             className="border-2 hover:border-blue-500"
                             key={image.id}
                         >
@@ -17,19 +19,19 @@ export default function Carousel({ images }: { images: Image[] }) {
                                 alt=""
                                 className="w-[50px]"
                             />
-                        </a>
+                        </button>
                     ))}
                 </div>
                 <div className="carousel w-full">
-                    {images.map((image, i) => (
-                        <div
-                            id={"item" + i}
-                            className="carousel-item w-full flex-shrink-0 flex-grow-0"
-                            key={image.id}
-                        >
-                            <img src={image.large} alt="" className="w-full h-96 object-contain" />
-                        </div>
-                    ))}
+                    <div className="carousel-item w-full flex-shrink-0 flex-grow-0">
+                        <img
+                            src={selectedImage.large}
+                            alt=""
+                            className="w-full h-96 object-contain"
+                        />
+                    </div>
+                    {/* {images.map((image, i) => (
+                    ))} */}
                 </div>
             </div>
         </>
