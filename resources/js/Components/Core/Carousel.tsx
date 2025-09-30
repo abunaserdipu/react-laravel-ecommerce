@@ -11,7 +11,12 @@ export default function Carousel({ images }: { images: Image[] }) {
                     {images.map((image, i) => (
                         <button
                             onClick={(ev) => setSelectedImage(image)}
-                            className="border-2 hover:border-blue-500"
+                            className={
+                                "border-2 " +
+                                (selectedImage.id === image.id
+                                    ? "border-blue-500"
+                                    : "hover:border-blue-500")
+                            }
                             key={image.id}
                         >
                             <img
