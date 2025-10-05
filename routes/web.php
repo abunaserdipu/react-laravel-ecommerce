@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -9,9 +10,7 @@ use Inertia\Inertia;
 Route::get('/', [ProductController::class, 'home'])->name('dashboard');
 Route::get('/product/{product:slug}', [ProductController::class, 'show'])->name('product.show');
 
-Route::post('/cart/store/{product}', function(){
-
-})->name('cart.store');
+Route::post('/cart/store/{product}', [CartController::class, 'store'])->name('cart.store');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
