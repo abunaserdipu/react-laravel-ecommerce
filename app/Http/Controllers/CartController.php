@@ -29,7 +29,18 @@ class CartController extends Controller
      */
     public function store(Request $request, CartService $cartService, Product $product)
     {
-        //
+        $request->mergeIfMissing([
+            'quantity' => 1
+        ]);
+
+        $data = $request->validate([
+            'option_ids' => ['nullable', 'array'],
+            'quantity' => ['required', 'integer', 'min:1']
+        ]);
+
+        $cartService->addItemToCart($product, $data['quantity'], $data['option_ids']);
+
+        return back()->with('success', 'Product added to cart successfully!');
     }
 
     /**
@@ -53,7 +64,16 @@ class CartController extends Controller
      */
     public function update(Request $request, CartService $cartService, Product $product)
     {
-        //
+        $request->validate([
+            'quantity' => ['integer', 'min:1']
+        ]);
+
+        $optionIds = $request->input('option_ids');
+        $quantity = $request->input('quantity');
+
+        $cartService->updateItemQuantity($product->id, $quantity, $optionIds);
+
+        return back()->with('success', 'Quantity was updated');
     }
 
     /**
