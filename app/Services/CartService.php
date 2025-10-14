@@ -15,4 +15,9 @@ class CartService
     {
 
     }
+
+    public function removeItemFromCart(int $productId, $optionIds = null)
+    {
+
+    }
 }
