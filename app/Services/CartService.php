@@ -44,7 +44,15 @@ class CartService
 
                 $productIds = collect($cartItems)->map(fn($item) => $item['produt_id']);
                 $products = Product::whereIn('id', $productIds)
-                    ->with('user.vendor');
+                    ->with('user.vendor')
+                    ->forWebsite()
+                    ->get()
+                    ->keyBy('id');
+
+                $cartItemData = [];
+                foreach ($cartItemData as $key => $cartItem) {
+                    $product = data_get($products, $cartItem['product_id']);
+                }
             }
 
             return $this->cachedCartItems;
